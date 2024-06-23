@@ -10,13 +10,15 @@
         "laravel/breeze": "^2.1",
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
+        "laravel/telescope": "^5.1",
         "laravel/tinker": "^2.9",
+        "spatie/laravel-medialibrary": "^11.7",
         "tightenco/ziggy": "^2.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
         "laravel/pint": "^1.13",
-        "laravel/sail": "^1.26",
+        "laravel/sail": "^1.29",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.0",
         "phpunit/phpunit": "^11.0.1"
@@ -25,7 +27,15 @@
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "Database\\Seeders\\": "database/seeders/",
+            "LaravelSupports\\Resources\\": "app/Modules/Supports/Resources/src/",
+            "LaravelSupports\\Codes\\": "app/Modules/Supports/Codes/src/",
+            "LaravelSupports\\Database\\": "app/Modules/Supports/Database/src/",
+            "LaravelSupports\\Controllers\\": "app/Modules/Supports/Controllers/src/",
+            "LaravelSupports\\Auth\\": "app/Modules/Supports/Auth/src/",
+            "LaravelSupports\\Http\\": "app/Modules/Supports/Http/src/",
+            "LaravelSupports\\Enums\\": "app/Modules/Supports/Enums/src/",
+            "LaravelSupports\\Models\\": "app/Modules/Supports/Models/src/"
         }
     },
     "autoload-dev": {
@@ -44,10 +54,49 @@
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
+        "decrypt-env": [
+            "@php artisan env:decrypt --key=base64:08sRP+QsLwvaL7DXANuE2cRkpSGuiYjEuXxgY5kf1I4= --cipher=AES-256-CBC --force --env"
+        ],
+        "encrypt-env": [
+            "@php artisan env:encrypt --key=base64:08sRP+QsLwvaL7DXANuE2cRkpSGuiYjEuXxgY5kf1I4= --cipher=AES-256-CBC --force --env"
+        ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi",
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi"
+        ],
+        "post-init": [
+            "@composer install",
+            "@composer decrypt-env",
+            "@composer update-modules",
+            "sail up -d",
+            "sail artisan migrate",
+            "npm install"
+        ],
+        "update-modules": [
+            "cd app/Modules/Supports && git checkout development && git pull origin development && cd ../../../"
+        ],
+        "update-all": [
+            "sail up -d",
+            "@composer decrypt-env",
+            "@composer update-modules",
+            "@composer update",
+            "@composer database-migrate"
+        ],
+        "database-refresh": [
+            "sail artisan migrate:fresh",
+            "@composer database-migrate",
+            "sail artisan db:seed"
+        ],
+        "database-migrate": [
+            "sail artisan migrate",
+            "sail artisan migrate --path=app/Modules/Supports/AI/database/migrations"
+        ],
+        "start": [
+            "sail up -d"
+        ],
+        "stop": [
+            "sail stop"
         ]
     },
     "extra": {
