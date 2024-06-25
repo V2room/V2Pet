@@ -1,4 +1,4 @@
-# V2Medi Frontend
+# V2Pat Frontend
 
 ## api 호출
 
