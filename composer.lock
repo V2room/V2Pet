@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fd0acb1ddab39c52d665f055e184e7c2",
+    "content-hash": "43a7e999792b7e3dd639c2d749a08bb1",
     "packages": [
         {
             "name": "brick/math",
@@ -715,59 +715,6 @@
                 }
             ],
             "time": "2023-10-06T06:47:41+00:00"
-        },
-        {
-            "name": "ferranfg/midjourney-php",
-            "version": "v2.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ferranfg/midjourney-discord-api-php.git",
-                "reference": "65ec41a7cced09be0ae1e2264ec9f85c19087bf7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ferranfg/midjourney-discord-api-php/zipball/65ec41a7cced09be0ae1e2264ec9f85c19087bf7",
-                "reference": "65ec41a7cced09be0ae1e2264ec9f85c19087bf7",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "^7.5",
-                "php": "^8.1"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Ferranfg\\MidjourneyPhp\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "ferran figueredo",
-                    "email": "hola@ferranfigueredo.com"
-                }
-            ],
-            "description": "Generate images using Midjourney Bot through the Discord API.",
-            "keywords": [
-                "midjourney",
-                "midjourney-api-bot",
-                "midjourney-bot"
-            ],
-            "support": {
-                "issues": "https://github.com/ferranfg/midjourney-discord-api-php/issues",
-                "source": "https://github.com/ferranfg/midjourney-discord-api-php"
-            },
-            "funding": [
-                {
-                    "url": "https://ko-fi.com/ferranfg",
-                    "type": "ko_fi"
-                }
-            ],
-            "abandoned": true,
-            "time": "2023-12-08T10:16:24+00:00"
         },
         {
             "name": "fruitcake/php-cors",

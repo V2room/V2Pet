@@ -18,7 +18,7 @@ class MidjourneyTest extends TestCase
         $midjourney = new MidjourneyApiClient($id, $token);
 
         $image = "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQgByBT5IiAT_a2x9pUVb4VMoOrlzHH7Jrzj-HB5jzHlR4lNLMS";
-        $imagineBuilder = $midjourney->imagine("$image have a teeth like a tiger");
+        $imagineBuilder = $midjourney->imagine("$image cute and lovely");
         $imagineBuilder->aspectRatio('16:9') //Changing the aspect ratio.
         // ->chaos(30) //The higher the chaos the more unusual and unexpected results.
                        ->fast()              //Enable fast mode for this single job.
