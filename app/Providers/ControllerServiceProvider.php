@@ -6,6 +6,7 @@ use App\Models\Card\Card;
 use App\Models\User\User;
 use App\Repositories\Card\CardRepository;
 use App\Repositories\User\UserRepository;
+use App\Services\AI\AIService;
 use App\Services\Card\CardService;
 use Illuminate\Support\ServiceProvider;
 use LaravelSupports\Auth\Contracts\AuthRepositoryContract;
@@ -20,6 +21,7 @@ class ControllerServiceProvider extends ServiceProvider
         $this->registerAuth();
         $this->registerUser();
         $this->registerCard();
+        $this->registerAI();
     }
 
     private function registerAuth(): void
@@ -36,7 +38,12 @@ class ControllerServiceProvider extends ServiceProvider
     private function registerCard(): void
     {
         $this->app->singleton(CardRepository::class, fn() => new CardRepository(Card::class));
-        $this->app->singleton(CardService::class, fn() => new CardService(app(CardRepository::class)));
+        $this->app->singleton(CardService::class, fn($app) => new CardService($app->make(CardRepository::class)));
+    }
+
+    private function registerAI(): void
+    {
+        $this->app->singleton(AIService::class, fn() => new AIService(config('ai.api_url')));
     }
 
     /**

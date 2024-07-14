@@ -4,18 +4,16 @@ namespace App\Http\Controllers;
 
 class MainController extends Controller
 {
+    protected string $prefix = 'Main';
 
     public function index()
     {
-        return $this->buildView(
-            view : 'Dashboard',
-            title: 'Dashboard',
-        );
+        return $this->buildView('Dashboard');
     }
 
     protected function setMiddleware(): void
     {
-        $this->middleware('auth:web');
+        $this->middleware('guest:web');
     }
 
 }

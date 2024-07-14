@@ -1,10 +1,10 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {Head} from '@inertiajs/react';
 import {Container} from "@/types/container";
 import React, {useState} from "react";
 import {CursorPagination} from "@/types/cursor-pagination";
 import {Card} from "@/types/Card/card";
 import PrimaryButton from "@/Components/PrimaryButton";
+import WebLayout from "@/Layouts/WebLayout";
 
 export default function Dashboard({
                                       auth,
@@ -19,9 +19,11 @@ export default function Dashboard({
     const [formError, setFormError] = useState(null);
 
     return (
-        <AuthenticatedLayout
+        <WebLayout
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">{title}</h2>}
+            auth={auth}
+            title={title}
         >
             <Head title={title}/>
 
@@ -53,6 +55,6 @@ export default function Dashboard({
                     </div>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </WebLayout>
     );
 }

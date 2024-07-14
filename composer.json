@@ -21,6 +21,7 @@
     "tightenco/ziggy": "^2.0"
   },
   "require-dev": {
+    "aschmelyun/fleet": "^1.1",
     "barryvdh/laravel-debugbar": "^3.13",
     "fakerphp/faker": "^1.23",
     "laravel/pint": "^1.13",
