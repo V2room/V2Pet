@@ -7,6 +7,8 @@ use App\Models\User\User;
 use App\Repositories\Card\CardRepository;
 use App\Repositories\User\UserRepository;
 use App\Services\AI\AIService;
+use App\Services\AI\Contracts\AIServiceContract;
+use App\Services\AI\TestService;
 use App\Services\Card\CardService;
 use Illuminate\Support\ServiceProvider;
 use LaravelSupports\Auth\Contracts\AuthRepositoryContract;
@@ -44,6 +46,9 @@ class ControllerServiceProvider extends ServiceProvider
     private function registerAI(): void
     {
         $this->app->singleton(AIService::class, fn() => new AIService(config('ai.api_url')));
+        $this->app->singleton(TestService::class, fn() => new TestService());
+
+        $this->app->bind(AIServiceContract::class, fn($app) => $app->make(TestService::class));
     }
 
     /**

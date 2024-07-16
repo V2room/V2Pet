@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Card;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Card\CardStoreRequest;
 use App\Http\Resources\Card\CardResource;
-use App\Services\AI\AIService;
+use App\Services\AI\Contracts\AIServiceContract;
 use App\Services\Card\CardService;
 use Illuminate\Support\Facades\Redirect;
 
@@ -13,7 +13,7 @@ class CardController extends Controller
 {
     protected string $prefix = 'Card';
 
-    public function __construct(private CardService $service, private AIService $aiService)
+    public function __construct(private CardService $service, private AIServiceContract $aiService)
     {
         parent::__construct();
     }

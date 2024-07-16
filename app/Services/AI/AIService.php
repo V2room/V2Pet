@@ -2,10 +2,11 @@
 
 namespace App\Services\AI;
 
+use App\Services\AI\Contracts\AIServiceContract;
 use GuzzleHttp\Client;
 use Illuminate\Http\UploadedFile;
 
-class AIService
+class AIService implements AIServiceContract
 {
 
     protected Client $client;
