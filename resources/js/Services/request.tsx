@@ -3,22 +3,24 @@ import {router} from "@inertiajs/react";
 import {Method} from "@inertiajs/core";
 import {ResponseTemplate} from "@/types/response-template";
 import {AxiosError, AxiosResponse} from "axios";
-import {Dispatch} from "react";
+import {InertiaFormProps} from "@inertiajs/react/types/useForm";
 
-export default class RequestService {
-    private setErrors: any;
+type FormDataType = object;
 
-    constructor(setErrors: Dispatch<React.SetStateAction<null>>) {
-        this.setErrors = setErrors;
+export default class RequestService<TForm extends FormDataType> {
+    private form: InertiaFormProps<TForm>;
+
+    constructor(form: InertiaFormProps<TForm>) {
+        this.form = form;
     }
 
     callAxios<Data>(
         method: Method,
         url: string,
         data: any,
+        header: {},
         callback: (response: ResponseTemplate<Data>) => void,
         errorCallback: ((response: ResponseTemplate<any>) => void) | null = null,
-        header: {},
     ) {
         let promise = new Promise((resolve, reject) => {
             NProgress.start()
@@ -36,14 +38,14 @@ export default class RequestService {
 
         // @ts-ignore
         promise.then((response: AxiosResponse) => {
+            this.form.clearErrors();
             callback({
                 data: response.data.data,
                 code: response.status,
                 message: response.data.message,
                 errors: response.data.errors,
             });
-        }).catch((error: AxiosError<ResponseTemplate<any>>) => {
-            console.log(error);
+        }).catch((error: AxiosError<Respons | eTemplate<any>>) => {
             this.error({
                     data: null,
                     code: error.response?.status ?? 500,
@@ -120,8 +122,8 @@ export default class RequestService {
             errorCallback(error)
         }
 
-        if (this.setErrors !== null) {
-            this.setErrors(error.errors);
+        if (this.form !== null) {
+            this.form.setError(error.errors);
         }
     }
 }

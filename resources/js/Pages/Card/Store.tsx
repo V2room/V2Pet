@@ -14,19 +14,18 @@ export default function Dashboard({auth, title, presets}: Container<{
     presets: Preset[];
 }>) {
     const [aiImage, setAIImage] = useState([]);
-    const {data, setData, post, errors, processing, recentlySuccessful} = useForm({
+    const form = useForm({
         image: null,
         message: '',
         preset: null,
     });
 
-    const [formError, setFormError] = useState(null);
-    const requestService = new RequestService(setFormError);
+    const requestService = new RequestService(form);
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('card.store'));
+        form.post(route('card.store'));
     };
 
     const handleFileInputChange = (file) => {
@@ -43,26 +42,24 @@ export default function Dashboard({auth, title, presets}: Container<{
 
         reader.readAsDataURL(file);
 
-        setData('image', file);
+        form.setData('image', file);
     }
 
     const generatePreset = (preset) => {
-        data.preset = preset;
-
+        form.data.preset = preset;
         requestService.callAxios(
             'post',
             route('card.ai.preset.generate'),
             {
                 preset: preset,
-                image: data.image,
+                image: form.data.image,
+            },
+            {
+                'Content-Type': 'multipart/form-data'
             },
             response => {
                 setAIImage(response.data)
             },
-            null,
-            {
-                'Content-Type': 'multipart/form-data'
-            }
         );
     }
 
@@ -88,8 +85,7 @@ export default function Dashboard({auth, title, presets}: Container<{
                                     id='image'
                                     label="사진"
                                     className="grid w-full max-w-sm items-center gap-1.5"
-                                    onChange={(e) => handleFileInputChange(e.target.files[0])}
-                                    errors={errors}
+                                    errors={form.errors}
                                 >
                                     <Input
                                         id='image'
@@ -114,13 +110,13 @@ export default function Dashboard({auth, title, presets}: Container<{
                                     label="메시지"
                                     className="grid w-full max-w-sm items-center gap-1.5"
                                     onChange={(e) => handleFileInputChange(e.target.files[0])}
-                                    errors={errors}
+                                    errors={form.errors}
                                 >
                                     <Input
                                         type="text"
                                         placeholder="메시지를 입력하세요."
-                                        value={data.message}
-                                        onChange={(e) => setData('message', e.target.value)}
+                                        value={form.data.message}
+                                        onChange={(e) => form.setData('message', e.target.value)}
                                     />
                                 </Labels>
 
@@ -149,10 +145,10 @@ export default function Dashboard({auth, title, presets}: Container<{
 
 
                                 <div className="flex items-center gap-4">
-                                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
+                                    <PrimaryButton disabled={form.processing}>Save</PrimaryButton>
 
                                     <Transition
-                                        show={recentlySuccessful}
+                                        show={form.recentlySuccessful}
                                         enter="transition ease-in-out"
                                         enterFrom="opacity-0"
                                         leave="transition ease-in-out"
