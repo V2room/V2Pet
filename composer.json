@@ -42,7 +42,8 @@
       "LaravelSupports\\Auth\\": "app/Modules/Supports/Auth/src/",
       "LaravelSupports\\Http\\": "app/Modules/Supports/Http/src/",
       "LaravelSupports\\Enums\\": "app/Modules/Supports/Enums/src/",
-      "LaravelSupports\\Models\\": "app/Modules/Supports/Models/src/"
+      "LaravelSupports\\Models\\": "app/Modules/Supports/Models/src/",
+      "LaravelSupports\\AI\\": "app/Modules/Supports/AI/src/"
     }
   },
   "autoload-dev": {
