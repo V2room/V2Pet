@@ -16,6 +16,18 @@
 composer post-init
 ```
 
+## ENV 암호화
+
+```shell
+composer encrypt-env
+```
+
+## ENV 복호화
+
+```shell
+composer decrypt-env
+```
+
 ## 최신 데이터 적용
 
 module 과 database,env 등 변동이 있을 경우 실행시켜야 합니다
@@ -41,19 +53,17 @@ composer database-refresh
 http://localhost 로 접속합니다
 
 ```shell
-# sail up -d
-
 composer start
 npm run dev
 ```
 
-## How to Stop
+## How to Stop?
 
 ```shell
 # 실행 중인 터미널 종료
-# sail stop
-
 ctrl + c
+
+# sail stop
 composer stop
 ```
 
