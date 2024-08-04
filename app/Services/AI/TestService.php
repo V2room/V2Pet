@@ -11,38 +11,38 @@ class TestService implements AIServiceContract
     public function presets()
     {
         $builder = fn($code, $name, $image) => [
-            'code' => $code,
-            'name' => $name,
+            'code'  => $code,
+            'name'  => $name,
             'image' => $image,
         ];
         return [
-            $builder('happy-party', 'Happy Party', 'https://media.discordapp.net/attachments/1259404272374775871/1262730281937404004/ai_dog_image.png?ex=6697a8b7&is=66965737&hm=2ec50f4950e8338edbf39cdc1918d757cbe1066177c46184e442faf4f419eab4&=&format=webp&quality=lossless'),
-            $builder('preset2', 'Preset 2', 'https://media.discordapp.net/attachments/1259404272374775871/1262733679348809738/image.png?ex=6697abe1&is=66965a61&hm=016bcd0ef9d61bc56964dd44a77531d009917a2ee632b9d95f10f01b03481bd6&=&format=webp&quality=lossless'),
+            $builder('happy-party', 'Happy Party', 'https://cdn.discordapp.com/attachments/1259404272374775871/1262732980275777647/image.png?ex=66b00efa&is=66aebd7a&hm=a3592d5729374923aebc0cfcd8c553e6a8b18a529271a7f4f0370e72a89d5592&'),
+            $builder('preset2', 'Preset 2', 'https://cdn.discordapp.com/attachments/1259404272374775871/1262733679768244234/image.png?ex=66b00fa1&is=66aebe21&hm=cefa0608e7136eb45ce878a966a7446a37c2962c3e2efce7fee0e803ffee55ce&'),
         ];
     }
 
     public function generate(UploadedFile $image, string $preset)
     {
         $builder = fn($url) => [
-            'url' => $url,
-            'size' => '1024',
-            'width' => '512',
+            'url'    => $url,
+            'size'   => '1024',
+            'width'  => '512',
             'height' => '512',
         ];
 
         $result = [
-            $builder('https://media.discordapp.net/attachments/1259404272374775871/1262730281937404004/ai_dog_image.png?ex=6697a8b7&is=66965737&hm=2ec50f4950e8338edbf39cdc1918d757cbe1066177c46184e442faf4f419eab4&=&format=webp&quality=lossless'),
-            $builder('https://media.discordapp.net/attachments/1259404272374775871/1262732936394965043/image.png?ex=6697ab30&is=669659b0&hm=274ec75be12750943ce34ddabe3594264396aa73c308f67e2e2c01be752dbbf5&=&format=webp&quality=lossless'),
-            $builder('https://media.discordapp.net/attachments/1259404272374775871/1262732980275777647/image.png?ex=6697ab3a&is=669659ba&hm=506631aa10436701fe1a2b9a16087b1cb5972b1935cc670163354ad2dff7b5e0&=&format=webp&quality=lossless'),
-            $builder('https://media.discordapp.net/attachments/1259404272374775871/1262733018066583592/image.png?ex=6697ab43&is=669659c3&hm=c64845d22e4a4d786a4b62b49923074597704e8b92d78c53be84bf5cfbae0855&=&format=webp&quality=lossless&width=354&height=350'),
+            $builder('https://cdn.discordapp.com/attachments/1259404272374775871/1262730281937404004/ai_dog_image.png?ex=66b00c77&is=66aebaf7&hm=f18d0b587fb31f39064be2c67fbe654b1f6ed08f22c066298792c3993c73605a&'),
+            $builder('https://cdn.discordapp.com/attachments/1259404272374775871/1262732936394965043/image.png?ex=66b00ef0&is=66aebd70&hm=b6980de7125b27b79ac97f876bb0356ca60521c2a8ece309475128a6ba5e4a7e&'),
+            $builder('https://cdn.discordapp.com/attachments/1259404272374775871/1262732980275777647/image.png?ex=66b00efa&is=66aebd7a&hm=a3592d5729374923aebc0cfcd8c553e6a8b18a529271a7f4f0370e72a89d5592&'),
+            $builder('https://cdn.discordapp.com/attachments/1259404272374775871/1262733018066583592/image.png?ex=66b00f03&is=66aebd83&hm=e41ff57dce71119027ecbf8794dd059ac76ca85469318759367d33c351139f72&'),
         ];
 
         if ($preset == 'preset2') {
             $result = [
-                $builder('https://media.discordapp.net/attachments/1259404272374775871/1262733679348809738/image.png?ex=6697abe1&is=66965a61&hm=016bcd0ef9d61bc56964dd44a77531d009917a2ee632b9d95f10f01b03481bd6&=&format=webp&quality=lossless'),
-                $builder('https://media.discordapp.net/attachments/1259404272374775871/1262733679768244234/image.png?ex=6697abe1&is=66965a61&hm=f952f80ffad6cdacc8224454dfc291216f61f1d1b140a9c4f4512167042fcf65&=&format=webp&quality=lossless'),
-                $builder('https://media.discordapp.net/attachments/1259404272374775871/1262733680279945256/image.png?ex=6697abe1&is=66965a61&hm=2603b77f56d760f872a1de4050fb6a85ba06ae88021ff911e170308f91cedb13&=&format=webp&quality=lossless'),
-                $builder('https://media.discordapp.net/attachments/1259404272374775871/1262733680774877246/image.png?ex=6697abe1&is=66965a61&hm=1bebedb5b56df4fd9c54bdff48eecdaa9c82b889e0dde0b27c1e70656f40ed6a&=&format=webp&quality=lossless'),
+                $builder('https://cdn.discordapp.com/attachments/1259404272374775871/1262733679768244234/image.png?ex=66b00fa1&is=66aebe21&hm=cefa0608e7136eb45ce878a966a7446a37c2962c3e2efce7fee0e803ffee55ce&'),
+                $builder('https://cdn.discordapp.com/attachments/1259404272374775871/1262733679348809738/image.png?ex=66b00fa1&is=66aebe21&hm=8f3d8d3bd6245aa76da8fd9dad88225b0b03955a9dc2a2be2561b8c448730be9&'),
+                $builder('https://cdn.discordapp.com/attachments/1259404272374775871/1262733680279945256/image.png?ex=66b00fa1&is=66aebe21&hm=896b5a3621dd5ff231ae95902a6508634fcd7ab92e90feca52a8adfbd774dbd8&'),
+                $builder('https://cdn.discordapp.com/attachments/1259404272374775871/1262733680774877246/image.png?ex=66b00fa1&is=66aebe21&hm=100885f853957cf937c5ba47dc8303b1ccc05f684b3f85f93b39b7d52aeddb09&'),
             ];
         }
         return $result;
