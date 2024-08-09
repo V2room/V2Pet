@@ -4,6 +4,10 @@
 - [Backend.md](Backend.md)
 - [Laravel Supports](https://github.com/WilsonParker/LaravelSupports)
 
+## 소개
+
+반려 동물의 생일 또는 장례를 축하, 위로 하는 카드를 만들어 공유 하는 서비스 입니다
+
 ## 개발 환경
 
 - PHP 8.3
