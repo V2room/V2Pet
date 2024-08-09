@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Card;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Card\CardStoreRequest;
 use App\Http\Resources\Card\CardResource;
+use App\Services\AI\Contracts\AIServiceContract;
 use App\Services\Card\CardService;
 use Illuminate\Support\Facades\Redirect;
 
@@ -12,7 +13,7 @@ class CardController extends Controller
 {
     protected string $prefix = 'Card';
 
-    public function __construct(private CardService $service)
+    public function __construct(private CardService $service, private AIServiceContract $aiService)
     {
         parent::__construct();
     }
@@ -22,19 +23,20 @@ class CardController extends Controller
         $pagination = $this->service->pagination();
         $pagination->transform(fn($item) => new CardResource($item));
         return $this->buildView(
-            view  : 'Index',
+            view: 'Index',
             params: [
                 'pagination' => $pagination,
             ],
-            title : 'Card 목록',
         );
     }
 
     public function create()
     {
         return $this->buildView(
-            view : 'Store',
-            title: 'Card 등록',
+            view: 'Store',
+            params: [
+                'presets' => $this->aiService->presets(),
+            ]
         );
     }
 
@@ -42,8 +44,8 @@ class CardController extends Controller
     {
         $validated = $request->validated();
         $this->service->store(
-            user   : $this->getCurrentUser(),
-            image  : $validated['image'],
+            user: $this->getCurrentUser(),
+            image: $validated['image'],
             message: $validated['message'],
         );
         return Redirect::route('card.index');
@@ -51,6 +53,6 @@ class CardController extends Controller
 
     protected function setMiddleware(): void
     {
-        $this->middleware('auth:web');
+        $this->middleware('guest:web');
     }
 }

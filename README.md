@@ -1,7 +1,17 @@
-# V2Pat
+# V2Pet
 
 - [Frontend.md](Frontend.md)
 - [Backend.md](Backend.md)
+- [Laravel Supports](https://github.com/WilsonParker/LaravelSupports)
+
+## 개발 환경
+
+- PHP 8.3
+- Laravel 11.9
+- Inertia
+    - TypeScript 5.5.4
+    - React 18.3.1
+- sail (docker)
 
 ## 최초 설정
 
@@ -14,6 +24,18 @@
 # npm install
 
 composer post-init
+```
+
+## ENV 암호화
+
+```shell
+composer encrypt-env
+```
+
+## ENV 복호화
+
+```shell
+composer decrypt-env
 ```
 
 ## 최신 데이터 적용
@@ -41,19 +63,17 @@ composer database-refresh
 http://localhost 로 접속합니다
 
 ```shell
-# sail up -d
-
 composer start
 npm run dev
 ```
 
-## How to Stop
+## How to Stop?
 
 ```shell
 # 실행 중인 터미널 종료
-# sail stop
-
 ctrl + c
+
+# sail stop
 composer stop
 ```
 
