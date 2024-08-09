@@ -2,6 +2,16 @@
 
 - [Frontend.md](Frontend.md)
 - [Backend.md](Backend.md)
+- [Laravel Supports](https://github.com/WilsonParker/LaravelSupports)
+
+## 개발 환경
+
+- PHP 8.3
+- Laravel 11.9
+- Inertia
+    - TypeScript 5.5.4
+    - React 18.3.1
+- sail (docker)
 
 ## 최초 설정
 
