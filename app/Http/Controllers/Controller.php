@@ -7,5 +7,5 @@ use LaravelSupports\Controllers\BaseInerTiaController;
 
 abstract class Controller extends BaseInerTiaController
 {
-    protected string $title = 'V2Pat';
+    protected string $title = 'V2Pet';
 }
