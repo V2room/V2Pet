@@ -37,13 +37,18 @@ export default function WebLayout({auth, children}: Container<{}>) {
                                         >
                                             로그인
                                         </NavLink>
-                                        <NavLink href={route('card.index')}
-                                                 active={route().current('card.index')}
+                                        <NavLink href={route('register')}
+                                                 active={route().current('register')}
                                         >
-                                            카드 만들기
+                                            회원 가입
                                         </NavLink>
                                     </>
                                 )}
+                                <NavLink href={route('card.index')}
+                                         active={route().current('card.index')}
+                                >
+                                    카드 만들기
+                                </NavLink>
                             </div>
                         </div>
 
@@ -84,7 +89,7 @@ export default function WebLayout({auth, children}: Container<{}>) {
                                     <Dropdown.Content>
                                         {auth.user ? (
                                             <>
-                                                <Dropdown.Link href={route('auth.logout')} method="post" as="button">
+                                                <Dropdown.Link href={route('logout')} method="post" as="button">
                                                     Log Out
                                                 </Dropdown.Link>
                                             </>

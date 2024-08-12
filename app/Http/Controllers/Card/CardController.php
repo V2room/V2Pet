@@ -23,7 +23,7 @@ class CardController extends Controller
         $pagination = $this->service->pagination();
         $pagination->transform(fn($item) => new CardResource($item));
         return $this->buildView(
-            view: 'Index',
+            view  : 'Index',
             params: [
                 'pagination' => $pagination,
             ],
@@ -33,10 +33,10 @@ class CardController extends Controller
     public function create()
     {
         return $this->buildView(
-            view: 'Store',
+            view  : 'Store',
             params: [
                 'presets' => $this->aiService->presets(),
-            ]
+            ],
         );
     }
 
@@ -44,15 +44,12 @@ class CardController extends Controller
     {
         $validated = $request->validated();
         $this->service->store(
-            user: $this->getCurrentUser(),
-            image: $validated['image'],
+            user   : $this->getCurrentUser(),
+            image  : $validated['image'],
             message: $validated['message'],
         );
         return Redirect::route('card.index');
     }
 
-    protected function setMiddleware(): void
-    {
-        $this->middleware('guest:web');
-    }
+    protected function setMiddleware(): void {}
 }

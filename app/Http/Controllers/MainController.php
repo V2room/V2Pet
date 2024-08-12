@@ -11,9 +11,6 @@ class MainController extends Controller
         return $this->buildView('Dashboard');
     }
 
-    protected function setMiddleware(): void
-    {
-        $this->middleware('guest:web');
-    }
+    protected function setMiddleware(): void {}
 
 }

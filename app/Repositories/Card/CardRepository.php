@@ -11,10 +11,10 @@ use LaravelSupports\Database\Repositories\BaseRepository;
 class CardRepository extends BaseRepository
 {
 
-    public function store(User $user, string $message): Card|Model
+    public function store(?User $user, string $message): Card|Model
     {
         return $this->model->create([
-            'user_id' => $user->getKey(),
+            'user_id' => $user?->getKey(),
             'message' => $message,
         ]);
     }
