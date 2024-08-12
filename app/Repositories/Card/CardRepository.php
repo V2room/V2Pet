@@ -21,7 +21,7 @@ class CardRepository extends BaseRepository
 
     public function pagination(int $page, int $size): LengthAwarePaginator
     {
-        return $this->model->paginate($size, ['*'], 'page', $page);
+        return $this->model->orderBy('id', 'desc')->paginate($size, ['*'], 'page', $page);
     }
 
 }

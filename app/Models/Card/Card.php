@@ -16,4 +16,5 @@ class Card extends BaseMediaModel
     {
         return $this->hasMany(CardComment::class);
     }
+    
 }

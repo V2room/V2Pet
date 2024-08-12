@@ -10,7 +10,7 @@ import {Input} from "@/Components/ui/input";
 import {Labels} from "@/Components/Labels";
 import {Avatar, AvatarFallback, AvatarImage} from "@/Components/ui/avatar";
 
-export default function Dashboard({auth, title, presets}: Container<{
+export default function Store({auth, title, presets}: Container<{
     presets: Preset[];
 }>) {
     const [aiImage, setAIImage] = useState([]);
@@ -28,7 +28,7 @@ export default function Dashboard({auth, title, presets}: Container<{
         form.post(route('card.store'));
     };
 
-    const handleFileInputChange = (file) => {
+    const handleFileInputChange = (file: File) => {
         const reader = new FileReader();
 
         reader.onload = function (e) {
@@ -45,7 +45,7 @@ export default function Dashboard({auth, title, presets}: Container<{
         form.setData('image', file);
     }
 
-    const generatePreset = (preset) => {
+    const generatePreset = (preset: string) => {
         form.data.preset = preset;
         requestService.callAxios(
             'post',
