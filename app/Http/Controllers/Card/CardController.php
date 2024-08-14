@@ -62,5 +62,26 @@ class CardController extends Controller
         return Redirect::route('card.index');
     }
 
+    public function edit(Card $card)
+    {
+        return $this->buildView(
+            view  : 'Edit',
+            params: [
+                'card' => new CardResource($card),
+            ],
+        );
+    }
+
+    public function update(CardStoreRequest $request)
+    {
+        $validated = $request->validated();
+        $this->service->store(
+            image  : $validated['image'],
+            user   : $this->getCurrentUser(),
+            message: $validated['message'],
+        );
+        return Redirect::route('card.index');
+    }
+
     protected function setMiddleware(): void {}
 }

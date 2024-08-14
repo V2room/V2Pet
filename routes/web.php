@@ -15,7 +15,7 @@ Route::middleware('auth')->group(function () {
 Route::redirect('/', '/dashboard')->name('main');
 Route::get('/dashboard', [MainController::class, 'index'])->name('dashboard');
 
-Route::resource('card', CardController::class)->except(['delete']);
+Route::resource('card', CardController::class);
 Route::prefix('card')->name('card.')->group(function () {
     Route::prefix('ai')->name('ai.')->group(function () {
         Route::post('preset', [PresetController::class, 'generate'])->name('preset.generate');

@@ -65,8 +65,6 @@ export default function Store({auth, title, presets}: Container<{
 
     return (
         <WebLayout
-            user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">{title}</h2>}
             auth={auth}
             title={title}>
             <Head title={title}/>
@@ -109,7 +107,6 @@ export default function Store({auth, title, presets}: Container<{
                                     id='message'
                                     label="메시지"
                                     className="grid w-full max-w-sm items-center gap-1.5"
-                                    onChange={(e) => handleFileInputChange(e.target.files[0])}
                                     errors={form.errors}
                                 >
                                     <Input

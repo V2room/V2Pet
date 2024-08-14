@@ -1,12 +1,24 @@
-import {Head, Link} from '@inertiajs/react';
+import {Head, Link, useForm} from '@inertiajs/react';
 import {Container} from "@/types/container";
-import React from "react";
+import React, {FormEventHandler} from "react";
 import WebLayout from "@/Layouts/WebLayout";
 import {Card} from "@/types/Card/card";
+import {Input} from "@/Components/ui/input";
+import {Labels} from "@/Components/Labels";
+import {Button} from "@headlessui/react";
 
-export default function Show({auth, title, card}: Container<{
+export default function Edit({auth, title, card}: Container<{
     card: Card;
 }>) {
+    const form = useForm({
+        message: card.message,
+    });
+
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+
+        form.put(route('card.update'));
+    };
 
     return (
         <WebLayout
@@ -23,25 +35,34 @@ export default function Show({auth, title, card}: Container<{
                             <img className="w-full h-48 object-cover" src={card.image}
                                  alt="Image"/>
 
-                            <div className="p-4">
-                                <p className="mt-2 text-gray-600">{card.message}</p>
-                            </div>
+                            <Labels
+                                id='message'
+                                className="grid w-full max-w-sm items-center gap-1.5"
+                                errors={form.errors}
+                            >
+                                <Input
+                                    type="text"
+                                    placeholder="메시지를 입력하세요."
+                                    value={form.data.message}
+                                    onChange={(e) => form.setData('message', e.target.value)}
+                                />
+                            </Labels>
                         </div>
 
                         {card.user_id === auth.user?.id &&
                             <div className="mt-4">
-                                <Link
+                                <Button
                                     className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-500"
-                                    href={route('card.edit', card.id)}
+                                    onClick={submit}
                                 >
                                     Update
-                                </Link>
+                                </Button>
 
                                 <Link
                                     className="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-500"
-                                    href={route('card.destroy', card.id)}
+                                    href={route('card.show', card.id)}
                                 >
-                                    Delete
+                                    Cancel
                                 </Link>
                             </div>
                         }
