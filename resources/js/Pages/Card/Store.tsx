@@ -125,6 +125,7 @@ export default function Store({auth, title, presets}: Container<{
                                         <>
                                             {preset.name}
                                             <Avatar
+                                                className="w-32 h-32"
                                                 onClick={() => generatePreset(preset.code)}
                                             >
                                                 <AvatarImage src={preset.image}/>
