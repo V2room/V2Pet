@@ -1,12 +1,24 @@
-import {Head, Link} from '@inertiajs/react';
+import {Head, useForm} from '@inertiajs/react';
 import {Container} from "@/types/container";
 import React from "react";
 import WebLayout from "@/Layouts/WebLayout";
 import {Card} from "@/types/Card/card";
+import DangerButton from "@/Components/DangerButton";
+import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function Show({auth, title, card}: Container<{
     card: Card;
 }>) {
+
+    const form = useForm();
+
+    const updateClick = () => {
+        form.get(route('card.edit', card.id))
+    }
+
+    const deleteClick = () => {
+        form.delete(route('card.destroy', card.id))
+    }
 
     return (
         <WebLayout
@@ -28,22 +40,22 @@ export default function Show({auth, title, card}: Container<{
                             </div>
                         </div>
 
-                        {card.user_id === auth.user?.id &&
+                        {card.user_id === auth.user?.id ?
                             <div className="mt-4">
-                                <Link
-                                    className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-500"
-                                    href={route('card.edit', card.id)}
+                                <PrimaryButton
+                                    onClick={updateClick}
                                 >
                                     Update
-                                </Link>
+                                </PrimaryButton>
 
-                                <Link
-                                    className="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-500"
-                                    href={route('card.destroy', card.id)}
+                                <DangerButton
+                                    onClick={deleteClick}
                                 >
                                     Delete
-                                </Link>
+                                </DangerButton>
                             </div>
+                            :
+                            <></>
                         }
                     </div>
                 </div>

@@ -17,7 +17,7 @@ export default function Edit({auth, title, card}: Container<{
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        form.put(route('card.update'));
+        form.put(route('card.update', card));
     };
 
     return (

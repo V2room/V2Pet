@@ -11,8 +11,8 @@ class CardResource extends BaseIdResources
     {
         return [
             'image'   => $this->getMediaUrl('card', 'thumbnail'),
-            'message' => $this->message,
             'user_id' => $this->user_id,
+            'message' => $this->message,
         ];
     }
 }
