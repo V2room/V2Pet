@@ -10,7 +10,9 @@ export default function Show({auth, title, card}: Container<{
     card: Card;
 }>) {
 
-    const form = useForm();
+    const form = useForm({
+        newComment: ''
+    });
 
     const updateClick = () => {
         form.get(route('card.edit', card.id))
@@ -18,6 +20,10 @@ export default function Show({auth, title, card}: Container<{
 
     const deleteClick = () => {
         form.delete(route('card.destroy', card.id))
+    }
+
+    const storeComment = () => {
+
     }
 
     return (
@@ -40,6 +46,7 @@ export default function Show({auth, title, card}: Container<{
                             </div>
                         </div>
 
+                        {/* 업데이트 삭제 버튼 */}
                         {card.user_id === auth.user?.id ?
                             <div className="mt-4">
                                 <PrimaryButton
@@ -57,6 +64,35 @@ export default function Show({auth, title, card}: Container<{
                             :
                             <></>
                         }
+
+                        {/* 댓글 목록 */}
+                        <div className="mt-6">
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Comments</h3>
+                            <div className="mt-4 space-y-4">
+                                {card.comments.map((comment) => (
+                                    <div key={comment.id} className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+                                        <p className="text-gray-800 dark:text-gray-200">{comment.content}</p>
+                                        <small className="text-gray-600 dark:text-gray-400">
+                                            - {comment.user_id}
+                                        </small>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* 댓글 입력 폼 */}
+                        <div className="mt-6">
+                <textarea
+                    className="w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+                    rows="3"
+                    placeholder="Write a comment..."
+                    value={form.data.newComment}
+                ></textarea>
+                            <div className="mt-4">
+                                <PrimaryButton onClick={storeComment}>Submit</PrimaryButton>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
