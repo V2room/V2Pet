@@ -10,7 +10,7 @@ import {Input} from "@/Components/ui/input";
 import {Labels} from "@/Components/Labels";
 import {Avatar, AvatarFallback, AvatarImage} from "@/Components/ui/avatar";
 
-export default function Dashboard({auth, title, presets}: Container<{
+export default function Store({auth, title, presets}: Container<{
     presets: Preset[];
 }>) {
     const [aiImage, setAIImage] = useState([]);
@@ -25,10 +25,10 @@ export default function Dashboard({auth, title, presets}: Container<{
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        form.post(route('card.store'));
+        form.post(route('cards.store'));
     };
 
-    const handleFileInputChange = (file) => {
+    const handleFileInputChange = (file: File) => {
         const reader = new FileReader();
 
         reader.onload = function (e) {
@@ -45,11 +45,11 @@ export default function Dashboard({auth, title, presets}: Container<{
         form.setData('image', file);
     }
 
-    const generatePreset = (preset) => {
+    const generatePreset = (preset: string) => {
         form.data.preset = preset;
         requestService.callAxios(
             'post',
-            route('card.ai.preset.generate'),
+            route('cards.ai.presets.generate'),
             {
                 preset: preset,
                 image: form.data.image,
@@ -65,8 +65,6 @@ export default function Dashboard({auth, title, presets}: Container<{
 
     return (
         <WebLayout
-            user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">{title}</h2>}
             auth={auth}
             title={title}>
             <Head title={title}/>
@@ -109,7 +107,6 @@ export default function Dashboard({auth, title, presets}: Container<{
                                     id='message'
                                     label="메시지"
                                     className="grid w-full max-w-sm items-center gap-1.5"
-                                    onChange={(e) => handleFileInputChange(e.target.files[0])}
                                     errors={form.errors}
                                 >
                                     <Input
@@ -125,6 +122,7 @@ export default function Dashboard({auth, title, presets}: Container<{
                                         <>
                                             {preset.name}
                                             <Avatar
+                                                className="w-32 h-32"
                                                 onClick={() => generatePreset(preset.code)}
                                             >
                                                 <AvatarImage src={preset.image}/>

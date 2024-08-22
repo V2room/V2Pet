@@ -13,7 +13,7 @@ return new class extends Migration {
     {
         Schema::create('cards', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->nullable()->constrained()->cascadeOnUpdate();
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnUpdate();
             $table->text('message');
             $table->timestamps();
             $table->softDeletes();

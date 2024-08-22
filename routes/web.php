@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AI\PresetController;
+use App\Http\Controllers\Card\CardCommentController;
 use App\Http\Controllers\Card\CardController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProfileController;
@@ -15,10 +16,11 @@ Route::middleware('auth')->group(function () {
 Route::redirect('/', '/dashboard')->name('main');
 Route::get('/dashboard', [MainController::class, 'index'])->name('dashboard');
 
-Route::resource('card', CardController::class)->only(['index', 'create', 'store']);
-Route::prefix('card')->name('card.')->group(function () {
+Route::resource('cards', CardController::class);
+Route::resource('cards.comments', CardCommentController::class);
+Route::prefix('cards')->name('cards.')->group(function () {
     Route::prefix('ai')->name('ai.')->group(function () {
-        Route::post('preset', [PresetController::class, 'generate'])->name('preset.generate');
+        Route::post('presets', [PresetController::class, 'generate'])->name('presets.generate');
     });
 });
 

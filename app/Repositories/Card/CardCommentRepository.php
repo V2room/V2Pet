@@ -8,20 +8,21 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use LaravelSupports\Database\Repositories\BaseRepository;
 
-class CardRepository extends BaseRepository
+class CardCommentRepository extends BaseRepository
 {
 
-    public function store(?User $user, string $message): Card|Model
+    public function store(User $user, Card $card, string $content): Card|Model
     {
         return $this->model->create([
-            'user_id' => $user?->getKey(),
-            'message' => $message,
+            'user_id' => $user->getKey(),
+            'card_id' => $card->getKey(),
+            'message' => $content,
         ]);
     }
 
     public function pagination(int $page, int $size): LengthAwarePaginator
     {
-        return $this->model->orderBy('id', 'desc')->paginate($size, ['*'], 'page', $page);
+        return $this->model->with(['user', 'card'])->orderBy('id', 'desc')->paginate($size, ['*'], 'page', $page);
     }
 
 }
