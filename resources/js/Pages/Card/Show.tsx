@@ -27,6 +27,7 @@ export default function Show({auth, title, card}: Container<{
     const storeComment = () => {
         form.data.message = newComment;
         form.post(route('cards.comments.store', card.id))
+        setNewComment('');
     }
     const handleCommentChange = (event) => {
         setNewComment(event.target.value);
