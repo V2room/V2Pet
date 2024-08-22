@@ -44,7 +44,7 @@ export default function WebLayout({auth, children}: Container<{}>) {
                                         </NavLink>
                                     </>
                                 )}
-                                <NavLink href={route('card.index')}
+                                <NavLink href={route('cards.index')}
                                          active={route().current('card.index')}
                                 >
                                     카드
@@ -136,7 +136,7 @@ export default function WebLayout({auth, children}: Container<{}>) {
                         <ResponsiveNavLink href={route('main')} active={route().current('main')}>
                             Main
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink href={route('card.index')} active={route().current('card.index')}>
+                        <ResponsiveNavLink href={route('cards.index')} active={route().current('card.index')}>
                             카드
                         </ResponsiveNavLink>
                     </div>

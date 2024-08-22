@@ -17,7 +17,6 @@ export default function Index({
         pagination.data.sort((a, b) => a.id - b.id)
     );
     const [formError, setFormError] = useState(null);
-
     return (
         <WebLayout
             auth={auth}
@@ -32,7 +31,7 @@ export default function Index({
                             {cards.map((card) => (
                                 <Link
                                     key={card.id}
-                                    href={route('card.show', card.id)}
+                                    href={route('cards.show', card.id)}
                                 >
                                     <img src={card.image} alt="Preview"
                                          style={{maxWidth: '100%', maxHeight: '200px'}}/>
@@ -46,7 +45,7 @@ export default function Index({
                     <div className="flex items-center gap-4">
                         <PrimaryButton
                             onClick={() => {
-                                location.href = route('card.create');
+                                location.href = route('cards.create');
                             }}
                         >
                             카드 등록

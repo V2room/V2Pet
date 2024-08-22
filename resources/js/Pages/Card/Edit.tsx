@@ -17,7 +17,7 @@ export default function Edit({auth, title, card}: Container<{
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        form.put(route('card.update', card));
+        form.put(route('cards.update', card));
     };
 
     return (
@@ -49,7 +49,7 @@ export default function Edit({auth, title, card}: Container<{
                             </Labels>
                         </div>
 
-                        {card.user_id === auth.user?.id &&
+                        {card.user?.id === auth.user?.id &&
                             <div className="mt-4">
                                 <Button
                                     className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-500"
@@ -60,7 +60,7 @@ export default function Edit({auth, title, card}: Container<{
 
                                 <Link
                                     className="px-4 py-2 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-500"
-                                    href={route('card.show', card.id)}
+                                    href={route('cards.show', card.id)}
                                 >
                                     Cancel
                                 </Link>

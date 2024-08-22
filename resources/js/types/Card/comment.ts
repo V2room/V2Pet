@@ -1,7 +1,9 @@
 import {BaseModel} from "@/types/base-model";
+import {User} from "@/types/User/user";
+import {Card} from "@/types/Card/card";
 
 export interface Comment extends BaseModel {
-    content: string;
-    card_id: number;
-    user_id: number;
+    message: string;
+    card: Card;
+    user: User;
 }

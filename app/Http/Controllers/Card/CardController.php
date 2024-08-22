@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Card\CardStoreRequest;
 use App\Http\Requests\Card\CardUpdateRequest;
 use App\Http\Resources\Card\CardResource;
+use App\Http\Resources\Card\CardWithCommentResource;
 use App\Models\Card\Card;
 use App\Services\AI\Contracts\AIServiceContract;
 use App\Services\Card\CardService;
@@ -48,7 +49,7 @@ class CardController extends Controller
         return $this->buildView(
             view  : 'Show',
             params: [
-                'card' => new CardResource($card),
+                'card' => new CardWithCommentResource($card),
             ],
         );
     }
@@ -71,7 +72,7 @@ class CardController extends Controller
             card      : $card,
             attributes: $validated,
         );
-        return Redirect::route('card.show', $card);
+        return Redirect::route('cards.show', $card);
     }
 
     public function store(CardStoreRequest $request)
@@ -82,13 +83,13 @@ class CardController extends Controller
             user   : $this->getCurrentUser(),
             message: $validated['message'],
         );
-        return Redirect::route('card.index');
+        return Redirect::route('cards.index');
     }
 
     public function destroy(Card $card)
     {
         $this->service->delete($card);
-        return Redirect::route('card.index');
+        return Redirect::route('cards.index');
     }
 
     protected function setMiddleware(): void

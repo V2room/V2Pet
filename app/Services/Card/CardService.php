@@ -5,6 +5,7 @@ namespace App\Services\Card;
 use App\Models\Card\Card;
 use App\Models\User\User;
 use App\Repositories\Card\CardRepository;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 
@@ -20,7 +21,7 @@ class CardService
         return $model;
     }
 
-    public function pagination(int $page = 1, int $size = 10)
+    public function pagination(int $page = 1, int $size = 10): LengthAwarePaginator
     {
         return $this->repository->pagination($page, $size);
     }

@@ -25,7 +25,7 @@ export default function Store({auth, title, presets}: Container<{
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        form.post(route('card.store'));
+        form.post(route('cards.store'));
     };
 
     const handleFileInputChange = (file: File) => {
@@ -49,7 +49,7 @@ export default function Store({auth, title, presets}: Container<{
         form.data.preset = preset;
         requestService.callAxios(
             'post',
-            route('card.ai.preset.generate'),
+            route('cards.ai.presets.generate'),
             {
                 preset: preset,
                 image: form.data.image,

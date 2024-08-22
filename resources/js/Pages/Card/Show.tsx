@@ -1,6 +1,6 @@
 import {Head, useForm} from '@inertiajs/react';
 import {Container} from "@/types/container";
-import React from "react";
+import React, {useState} from "react";
 import WebLayout from "@/Layouts/WebLayout";
 import {Card} from "@/types/Card/card";
 import DangerButton from "@/Components/DangerButton";
@@ -9,21 +9,27 @@ import PrimaryButton from "@/Components/PrimaryButton";
 export default function Show({auth, title, card}: Container<{
     card: Card;
 }>) {
+    const [newComment, setNewComment] = useState('');
 
     const form = useForm({
-        newComment: ''
+        message: ''
     });
 
+
     const updateClick = () => {
-        form.get(route('card.edit', card.id))
+        form.get(route('cards.edit', card.id))
     }
 
     const deleteClick = () => {
-        form.delete(route('card.destroy', card.id))
+        form.delete(route('cards.destroy', card.id))
     }
 
     const storeComment = () => {
-
+        form.data.message = newComment;
+        form.post(route('cards.comments.store', card.id))
+    }
+    const handleCommentChange = (event) => {
+        setNewComment(event.target.value);
     }
 
     return (
@@ -47,7 +53,7 @@ export default function Show({auth, title, card}: Container<{
                         </div>
 
                         {/* 업데이트 삭제 버튼 */}
-                        {card.user_id === auth.user?.id ?
+                        {card.user?.id === auth.user?.id ?
                             <div className="mt-4">
                                 <PrimaryButton
                                     onClick={updateClick}
@@ -71,10 +77,10 @@ export default function Show({auth, title, card}: Container<{
                             <div className="mt-4 space-y-4">
                                 {card.comments.map((comment) => (
                                     <div key={comment.id} className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
-                                        <p className="text-gray-800 dark:text-gray-200">{comment.content}</p>
                                         <small className="text-gray-600 dark:text-gray-400">
-                                            - {comment.user_id}
+                                            - {comment.user.name}
                                         </small>
+                                        <p className="text-gray-800 dark:text-gray-200">{comment.message}</p>
                                     </div>
                                 ))}
                             </div>
@@ -84,9 +90,10 @@ export default function Show({auth, title, card}: Container<{
                         <div className="mt-6">
                 <textarea
                     className="w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
-                    rows="3"
                     placeholder="Write a comment..."
-                    value={form.data.newComment}
+                    rows="3"
+                    value={newComment}
+                    onChange={handleCommentChange}
                 ></textarea>
                             <div className="mt-4">
                                 <PrimaryButton onClick={storeComment}>Submit</PrimaryButton>
