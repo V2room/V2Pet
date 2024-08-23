@@ -17,7 +17,7 @@ export default function Edit({auth, title, card}: Container<{
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        form.put(route('cards.update', card));
+        form.put(route('cards.update', card.id));
     };
 
     return (
@@ -39,6 +39,7 @@ export default function Edit({auth, title, card}: Container<{
                                 id='message'
                                 className="grid w-full max-w-sm items-center gap-1.5"
                                 errors={form.errors}
+                                label="메시지"
                             >
                                 <Input
                                     type="text"

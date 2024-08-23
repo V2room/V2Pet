@@ -1,10 +1,11 @@
 import {Head, useForm} from '@inertiajs/react';
 import {Container} from "@/types/container";
-import React, {useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import WebLayout from "@/Layouts/WebLayout";
 import {Card} from "@/types/Card/card";
 import DangerButton from "@/Components/DangerButton";
 import PrimaryButton from "@/Components/PrimaryButton";
+import {Comment} from "@/types/Card/comment";
 
 export default function Show({auth, title, card}: Container<{
     card: Card;
@@ -29,8 +30,16 @@ export default function Show({auth, title, card}: Container<{
         form.post(route('cards.comments.store', card.id))
         setNewComment('');
     }
-    const handleCommentChange = (event) => {
-        setNewComment(event.target.value);
+
+    const deleteCommentClick = (comment: Comment) => {
+        form.delete(route('cards.comments.destroy', {
+            card: card.id,
+            comment: comment.id
+        }))
+    }
+
+    const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        setNewComment(e.target.value);
     }
 
     return (
@@ -82,6 +91,19 @@ export default function Show({auth, title, card}: Container<{
                                             - {comment.user.name}
                                         </small>
                                         <p className="text-gray-800 dark:text-gray-200">{comment.message}</p>
+
+                                        {/* 댓글 업데이트 삭제 버튼 */}
+                                        {comment.user.id === auth.user?.id ?
+                                            <div className="mt-4">
+                                                <DangerButton
+                                                    onClick={() => deleteCommentClick(comment)}
+                                                >
+                                                    Delete
+                                                </DangerButton>
+                                            </div>
+                                            :
+                                            <></>
+                                        }
                                     </div>
                                 ))}
                             </div>
@@ -92,12 +114,12 @@ export default function Show({auth, title, card}: Container<{
                 <textarea
                     className="w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
                     placeholder="Write a comment..."
-                    rows="3"
+                    rows={3}
                     value={newComment}
                     onChange={handleCommentChange}
                 ></textarea>
                             <div className="mt-4">
-                                <PrimaryButton onClick={storeComment}>Submit</PrimaryButton>
+                                <PrimaryButton onClick={storeComment}>댓글 등록</PrimaryButton>
                             </div>
                         </div>
 
