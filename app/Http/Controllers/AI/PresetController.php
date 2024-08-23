@@ -12,6 +12,7 @@ class PresetController extends Controller
 
     public function __construct(private AIServiceContract $service)
     {
+        parent::__construct();
     }
 
     public function generate(PresetGenerateRequest $request)

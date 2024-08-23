@@ -3,6 +3,7 @@ import {router} from "@inertiajs/react";
 import {Method} from "@inertiajs/core";
 import {ResponseTemplate} from "@/types/response-template";
 import {AxiosError, AxiosResponse} from "axios";
+// @ts-ignore
 import {InertiaFormProps} from "@inertiajs/react/types/useForm";
 
 type FormDataType = object;
@@ -45,7 +46,7 @@ export default class RequestService<TForm extends FormDataType> {
                 message: response.data.message,
                 errors: response.data.errors,
             });
-        }).catch((error: AxiosError<Respons | eTemplate<any>>) => {
+        }).catch((error: AxiosError<ResponseTemplate<any>>) => {
             this.error({
                     data: null,
                     code: error.response?.status ?? 500,

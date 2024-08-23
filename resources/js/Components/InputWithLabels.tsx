@@ -3,11 +3,16 @@ import {Label} from "@/Components/ui/label";
 import InputError from "@/Components/InputError";
 import {Input} from "@/Components/ui/input";
 
-export interface InputProps
-    extends React.InputHTMLAttributes<HTMLInputElement> {
+type FormDataType = object;
+
+export interface InputProps<TForm extends FormDataType> extends React.InputHTMLAttributes<HTMLInputElement> {
+    label: string
+    errors: Partial<Record<keyof TForm, string>>
+    divClass: string
+    inputClass: string
 }
 
-const InputWithLabels = React.forwardRef<HTMLInputElement, InputProps>(
+const InputWithLabels = React.forwardRef<HTMLInputElement, InputProps<any>>(
     ({id, label, errors, divClass, inputClass, type, children, ...props}, ref) => {
         return (
             <div className={divClass}>
@@ -20,7 +25,12 @@ const InputWithLabels = React.forwardRef<HTMLInputElement, InputProps>(
                     {...props}
                 />
                 {children}
-                <InputError message={errors[id]} className="mt-2"/>
+                {
+                    id != undefined ?
+                        <InputError message={errors[id]} className="mt-2"/>
+                        :
+                        <></>
+                }
             </div>
         )
     }

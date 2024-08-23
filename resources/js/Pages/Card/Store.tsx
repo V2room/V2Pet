@@ -1,6 +1,6 @@
 import {Head, useForm} from '@inertiajs/react';
 import {Container} from "@/types/container";
-import React, {FormEventHandler, useState} from "react";
+import React, {ChangeEvent, FormEventHandler, useState} from "react";
 import PrimaryButton from "@/Components/PrimaryButton";
 import WebLayout from "@/Layouts/WebLayout";
 import {Preset} from "@/types/AI/preset";
@@ -9,12 +9,32 @@ import {Transition} from "@headlessui/react";
 import {Input} from "@/Components/ui/input";
 import {Labels} from "@/Components/Labels";
 import {Avatar, AvatarFallback, AvatarImage} from "@/Components/ui/avatar";
+// @ts-ignore
+import {InertiaFormProps} from '@inertiajs/react/types/useForm';
+
+// Define the interface for form data
+interface FormData {
+    message: string,
+    preset: string | null,
+    image: File | null;
+}
+
+interface AIResponseType {
+    url: string,
+    size: number,
+    width: number,
+    height: number
+}
 
 export default function Store({auth, title, presets}: Container<{
     presets: Preset[];
 }>) {
-    const [aiImage, setAIImage] = useState([]);
-    const form = useForm({
+    const [aiImage, setAIImage] = useState([
+        {
+            url: ''
+        }
+    ]);
+    let form: InertiaFormProps<FormData> = useForm<FormData>({
         image: null,
         message: '',
         preset: null,
@@ -28,26 +48,32 @@ export default function Store({auth, title, presets}: Container<{
         form.post(route('cards.store'));
     };
 
-    const handleFileInputChange = (file: File) => {
-        const reader = new FileReader();
+    const handleFileInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const {name, value, files} = e.target;
+        if (files && files.length > 0) {
+            let file: File = files[0];
 
-        reader.onload = function (e) {
-            const previewImage = document.getElementById('previewImage');
-            const imagePreview = document.getElementById('imagePreview');
-            if (previewImage && imagePreview) {
-                previewImage.setAttribute('src', e.target.result.toString());
-                imagePreview.classList.remove('hidden');
+            const reader = new FileReader();
+
+            reader.onload = function (this: FileReader, e: ProgressEvent<FileReader>) {
+                const previewImage = document.getElementById('previewImage');
+                const imagePreview = document.getElementById('imagePreview');
+                if (previewImage && imagePreview) {
+                    let src: string = e.target?.result?.toString() ?? '';
+                    previewImage.setAttribute('src', src);
+                    imagePreview.classList.remove('hidden');
+                }
             }
+
+            reader.readAsDataURL(file);
+
+            form.setData('image', file);
         }
-
-        reader.readAsDataURL(file);
-
-        form.setData('image', file);
     }
 
     const generatePreset = (preset: string) => {
         form.data.preset = preset;
-        requestService.callAxios(
+        requestService.callAxios<AIResponseType[]>(
             'post',
             route('cards.ai.presets.generate'),
             {
@@ -91,7 +117,7 @@ export default function Store({auth, title, presets}: Container<{
                                         className={
                                             'border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm '
                                         }
-                                        onChange={(e) => handleFileInputChange(e.target.files[0])}
+                                        onChange={(e) => handleFileInputChange(e)}
                                     />
 
                                     <div id="imagePreview" className="mt-4 hidden">
@@ -132,9 +158,9 @@ export default function Store({auth, title, presets}: Container<{
                                     ))}
 
                                     <div>
-                                        {aiImage.map((aiImage) => (
+                                        {aiImage.map((image) => (
                                                 <img className="object-cover"
-                                                     src={aiImage.url}
+                                                     src={image.url}
                                                      alt="Sample image"/>
                                             )
                                         )}
