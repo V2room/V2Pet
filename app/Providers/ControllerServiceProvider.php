@@ -54,7 +54,11 @@ class ControllerServiceProvider extends ServiceProvider
         $this->app->singleton(AIService::class, fn() => new AIService(config('ai.api_url')));
         $this->app->singleton(TestService::class, fn() => new TestService());
 
-        $this->app->bind(AIServiceContract::class, fn($app) => $app->make(TestService::class));
+        if (config('app.env') === 'local') {
+            $this->app->bind(AIServiceContract::class, fn($app) => $app->make(TestService::class));
+        } else {
+            $this->app->bind(AIServiceContract::class, fn($app) => $app->make(AIService::class));
+        }
     }
 
     /**

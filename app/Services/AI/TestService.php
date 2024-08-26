@@ -23,6 +23,11 @@ class TestService implements AIServiceContract
         ];
     }
 
+    private function getImageUrl($image): string
+    {
+        return Storage::disk('local')->url('ai/' . $image);
+    }
+
     public function generate(UploadedFile $image, string $preset)
     {
         $builder = fn($url) => [
@@ -48,10 +53,5 @@ class TestService implements AIServiceContract
             ];
         }
         return $result;
-    }
-
-    private function getImageUrl($image): string
-    {
-        return Storage::disk('local')->url('/ai/' . $image);
     }
 }

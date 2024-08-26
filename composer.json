@@ -71,8 +71,7 @@
       "@php artisan env:encrypt --key=base64:08sRP+QsLwvaL7DXANuE2cRkpSGuiYjEuXxgY5kf1I4= --cipher=AES-256-CBC --force --env=local"
     ],
     "decrypt-env-dev": [
-      "@php artisan env:decrypt --key=base64:08sRP+QsLwvaL7DXANuE2cRkpSGuiYjEuXxgY5kf1I4= --cipher=AES-256-CBC --force --env=development",
-      "cp .env.development .env"
+      "@php artisan env:decrypt --key=base64:08sRP+QsLwvaL7DXANuE2cRkpSGuiYjEuXxgY5kf1I4= --cipher=AES-256-CBC --force --env=development"
     ],
     "encrypt-env-dev": [
       "@php artisan env:encrypt --key=base64:08sRP+QsLwvaL7DXANuE2cRkpSGuiYjEuXxgY5kf1I4= --cipher=AES-256-CBC --force --env=development"
