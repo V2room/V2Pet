@@ -94,6 +94,9 @@
     "update-modules": [
       "cd app/Modules/Supports && git checkout development && git pull origin development && cd ../../../"
     ],
+    "init-modules": [
+      "git submodule update --init --recursive"
+    ],
     "update-all": [
       "@composer start",
       "@composer decrypt-env",
@@ -124,6 +127,9 @@
     ],
     "start:dev": [
       "sail -f docker-compose.development.yml up -d"
+    ],
+    "migrate:dev": [
+      "docker compose -f docker-compose.development.yml exec v2pet-ai-com php artisan db:seed"
     ]
   },
   "extra": {
