@@ -126,6 +126,9 @@
     "start:dev": [
       "sail -f docker-compose.development.yml up -d"
     ],
+    "stop:dev": [
+      "sail -f docker-compose.development.yml stop"
+    ],
     "migrate:dev": [
       "docker compose -f docker-compose.development.yml exec v2pet-ai-com php artisan db:seed"
     ]
