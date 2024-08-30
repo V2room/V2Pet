@@ -1,5 +1,5 @@
 export interface Preset {
-    code: string;
+    id: number;
     name: string;
     image: string;
 }
