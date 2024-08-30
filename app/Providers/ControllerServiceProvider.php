@@ -13,6 +13,7 @@ use App\Services\AI\Contracts\AIServiceContract;
 use App\Services\AI\TestService;
 use App\Services\Card\CardCommentService;
 use App\Services\Card\CardService;
+use App\Services\Media\MediaService;
 use Illuminate\Support\ServiceProvider;
 use LaravelSupports\Auth\Contracts\AuthRepositoryContract;
 
@@ -23,6 +24,8 @@ class ControllerServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->singleton(MediaService::class, fn() => new MediaService());
+
         $this->registerAuth();
         $this->registerUser();
         $this->registerCard();
@@ -51,7 +54,7 @@ class ControllerServiceProvider extends ServiceProvider
 
     private function registerAI(): void
     {
-        $this->app->singleton(AIService::class, fn() => new AIService(config('ai.api_url')));
+        $this->app->singleton(AIService::class, fn($app) => new AIService(config('ai.api_url'), $app->make(MediaService::class)));
         $this->app->singleton(TestService::class, fn() => new TestService());
 
         if (config('app.env') === 'local') {

@@ -3,6 +3,7 @@
 namespace App\Services\AI;
 
 use App\Services\AI\Contracts\AIServiceContract;
+use App\Services\Media\MediaService;
 use GuzzleHttp\Client;
 use Illuminate\Http\UploadedFile;
 
@@ -11,7 +12,7 @@ class AIService implements AIServiceContract
 
     protected Client $client;
 
-    public function __construct(protected string $apiUrl)
+    public function __construct(protected string $apiUrl, protected MediaService $mediaService)
     {
         $this->client = new Client([
             'base_uri' => $apiUrl,
@@ -24,21 +25,22 @@ class AIService implements AIServiceContract
         return json_decode($response->getBody()->getContents(), true)['data'];
     }
 
-    public function generate(UploadedFile $image, string $preset)
+    public function generate(UploadedFile $image, string $preset): array
     {
         $response = $this->client->post('/api/ai/imagine', [
             'multipart' => [
                 [
-                    'name' => 'image',
+                    'name'     => 'image',
                     'contents' => fopen($image->getRealPath(), 'r'),
                     'filename' => $image->getClientOriginalName(),
                 ],
                 [
-                    'name' => 'preset',
+                    'name'     => 'preset',
                     'contents' => $preset,
                 ],
             ],
         ]);
-        return json_decode($response->getBody()->getContents(), true);
+
+        return $this->mediaService->cropImage(json_decode($response->getBody()->getContents(), true)['data']['url']);
     }
 }

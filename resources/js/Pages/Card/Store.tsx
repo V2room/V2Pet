@@ -29,11 +29,7 @@ interface AIResponseType {
 export default function Store({auth, title, presets}: Container<{
     presets: Preset[];
 }>) {
-    const [aiImage, setAIImage] = useState([
-        {
-            url: ''
-        }
-    ]);
+    const [aiImage, setAIImage] = useState(['']);
     let form: InertiaFormProps<FormData> = useForm<FormData>({
         image: null,
         message: '',
@@ -56,13 +52,8 @@ export default function Store({auth, title, presets}: Container<{
             const reader = new FileReader();
 
             reader.onload = function (this: FileReader, e: ProgressEvent<FileReader>) {
-                const previewImage = document.getElementById('previewImage');
-                const imagePreview = document.getElementById('imagePreview');
-                if (previewImage && imagePreview) {
-                    let src: string = e.target?.result?.toString() ?? '';
-                    previewImage.setAttribute('src', src);
-                    imagePreview.classList.remove('hidden');
-                }
+                let src: string = e.target?.result?.toString() ?? '';
+                previewImage(src);
             }
 
             reader.readAsDataURL(file);
@@ -70,10 +61,22 @@ export default function Store({auth, title, presets}: Container<{
             form.setData('image', file);
         }
     }
+    const previewImage = (src: string) => {
+        const previewImage = document.getElementById('previewImage');
+        const imagePreview = document.getElementById('imagePreview');
+        if (previewImage && imagePreview) {
+            previewImage.setAttribute('src', src);
+            imagePreview.classList.remove('hidden');
+        }
+    }
+    const handleAIImageClick = (image: string) => {
+        form.setData('image', image);
+        previewImage(image);
+    }
 
     const generatePreset = (preset: number) => {
         form.data.preset = preset;
-        requestService.callAxios<AIResponseType[]>(
+        requestService.callAxios<string[]>(
             'post',
             route('cards.ai.presets.generate'),
             {
@@ -160,8 +163,9 @@ export default function Store({auth, title, presets}: Container<{
                                     <div>
                                         {aiImage.map((image) => (
                                                 <img className="object-cover"
-                                                     src={image.url}
-                                                     alt="Sample image"/>
+                                                     onClick={() => handleAIImageClick(image)}
+                                                     src={image}
+                                                />
                                             )
                                         )}
                                     </div>

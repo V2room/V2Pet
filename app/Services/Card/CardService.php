@@ -14,10 +14,14 @@ class CardService
 
     public function __construct(protected CardRepository $repository) {}
 
-    public function store(UploadedFile $image, ?User $user, string $message): Model
+    public function store(UploadedFile|string $image, ?User $user, string $message): Model
     {
         $model = $this->repository->store($user, $message);
-        $model->addMedia($image)->toMediaCollection('card');
+        if (is_string($image)) {
+            $model->addMediaFromUrl($image)->toMediaCollection('card');
+        } else {
+            $model->addMedia($image)->toMediaCollection('card');
+        }
         return $model;
     }
 
