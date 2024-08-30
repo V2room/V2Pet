@@ -71,7 +71,7 @@ export default function Store({auth, title, presets}: Container<{
         }
     }
 
-    const generatePreset = (preset: string) => {
+    const generatePreset = (preset: number) => {
         form.data.preset = preset;
         requestService.callAxios<AIResponseType[]>(
             'post',
