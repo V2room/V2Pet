@@ -79,7 +79,7 @@ services:
       - '${FORWARD_MINIO_CONSOLE_PORT:-8900}:8900'
     environment:
       MINIO_ROOT_USER: sail
-      MINIO_ROOT_PASSWORD: password
+      MINIO_ROOT_PASSWORD: quTRBb78pBQGqT#25eAk&8fM1*MkDwrR
     volumes:
       - 'sail-minio:/data/minio'
     networks:
