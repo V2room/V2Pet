@@ -68,7 +68,6 @@
       "cp .env.local .env"
     ],
     "encrypt-env": [
-      "cp .env .env.local",
       "@php artisan env:encrypt --key=base64:08sRP+QsLwvaL7DXANuE2cRkpSGuiYjEuXxgY5kf1I4= --cipher=AES-256-CBC --force --env=local"
     ],
     "docker-compose": [
