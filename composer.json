@@ -71,11 +71,11 @@
       "cp .env .env.local",
       "@php artisan env:encrypt --key=base64:08sRP+QsLwvaL7DXANuE2cRkpSGuiYjEuXxgY5kf1I4= --cipher=AES-256-CBC --force --env=local"
     ],
-    "decrypt-env-dev": [
-      "@php artisan env:decrypt --key=base64:08sRP+QsLwvaL7DXANuE2cRkpSGuiYjEuXxgY5kf1I4= --cipher=AES-256-CBC --force --env=development"
+    "docker-compose": [
+      "cp docker-compose.local.yml docker-compose.yml"
     ],
-    "encrypt-env-dev": [
-      "@php artisan env:encrypt --key=base64:08sRP+QsLwvaL7DXANuE2cRkpSGuiYjEuXxgY5kf1I4= --cipher=AES-256-CBC --force --env=development"
+    "docker-compose-dev": [
+      "cp docker-compose.development.yml docker-compose.yml"
     ],
     "post-create-project-cmd": [
       "@php artisan key:generate --ansi",
@@ -86,6 +86,7 @@
       "@composer install",
       "@composer decrypt-env",
       "@composer update-modules",
+      "@composer docker-compose",
       "@composer start",
       "@composer migrate",
       "npm install"
@@ -124,14 +125,12 @@
     "migrate": [
       "sail artisan migrate"
     ],
-    "start:dev": [
-      "sail -f docker-compose.development.yml up -d"
-    ],
-    "stop:dev": [
-      "sail -f docker-compose.development.yml stop"
-    ],
-    "migrate:dev": [
-      "docker compose -f docker-compose.development.yml exec v2pet-ai-com php artisan db:seed"
+    "update-dev": [
+      "git pull",
+      "@composer update-modules",
+      "@composer decrypt-env-dev",
+      "cp .env.development .env",
+      "@composer docker-compose"
     ]
   },
   "extra": {
