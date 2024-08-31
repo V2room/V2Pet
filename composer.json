@@ -126,9 +126,8 @@
     ],
     "update-dev": [
       "git pull",
+      "@composer install",
       "@composer update-modules",
-      "@composer decrypt-env-dev",
-      "cp .env.development .env",
       "@composer docker-compose-dev"
     ]
   },
