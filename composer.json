@@ -129,7 +129,7 @@
       "@composer update-modules",
       "@composer decrypt-env-dev",
       "cp .env.development .env",
-      "@composer docker-compose"
+      "@composer docker-compose-dev"
     ]
   },
   "extra": {
